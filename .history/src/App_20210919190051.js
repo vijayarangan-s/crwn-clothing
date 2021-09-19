@@ -12,7 +12,6 @@ import './App.css'
 class App extends Component {
   
   constructor(){
-    super()
     this.state = {
       currentUser: null
     }
@@ -31,7 +30,7 @@ class App extends Component {
   render(){
     return (
       <div className="App">
-        <Header currentUser={this.state.currentUser}/>
+        <Header/>
         <Switch>
           <Route exact path="/" component={HomePage}/>
           <Route path="/shop" component={ShopPage} />

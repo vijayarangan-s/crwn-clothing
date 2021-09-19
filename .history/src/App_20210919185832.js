@@ -10,28 +10,10 @@ import './App.css'
 
 
 class App extends Component {
-  
-  constructor(){
-    super()
-    this.state = {
-      currentUser: null
-    }
-  }
-
-  unSubscribeFromAuth = null;
-
-  componentDidMount(){
-    this.unSubscribeFromAuth = auth.onAuthStateChanged(user => this.setState({currentUser:user}))
-  }
-
-  componentWillUnmount() {
-    this.unSubscribeFromAuth();
-  }
-   
   render(){
     return (
       <div className="App">
-        <Header currentUser={this.state.currentUser}/>
+        <Header/>
         <Switch>
           <Route exact path="/" component={HomePage}/>
           <Route path="/shop" component={ShopPage} />
