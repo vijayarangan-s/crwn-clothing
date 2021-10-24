@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux';
 import { ReactComponent as ShoppingBag } from '../../images/shopping-bag.svg';
 import { toggleCartHidden } from '../../redux/actions/cart/cart.action';
