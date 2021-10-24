@@ -1,5 +1,7 @@
 import { connect } from "react-redux"
+import { addCartToItem } from "../../../utils/cart.utils"
 import { cartActionType } from "../../types/cart/cart.type"
+
 
 const INITIAL_STATE = {
     hidden: true,
@@ -18,7 +20,7 @@ export const cartReducer = (state = INITIAL_STATE, action) =>{
         case cartActionType.ADD_ITEM:
             return{
                 ...state,
-                cartItems:[...state.cartItems, action.payload ]
+                cartItems:addCartToItem(...state.cartItems, action.payload )
             }
         default:
             return state;
