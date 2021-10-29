@@ -9,6 +9,9 @@ import { Component } from 'react';
 import './App.css'
 import { connect } from 'react-redux';
 import { setCurrentUser } from './redux/actions/user/user.action';
+import { createStructuredSelector } from 'reselect';
+import { selectCurrentUser } from './utils/Selectors/user.selectors';
+import Checkout  from './components/Checkout/Checkout';
 
 
 class App extends Component {
@@ -41,7 +44,6 @@ class App extends Component {
   }
    
   render(){
-    console.log({c:this.props.currentUser})
     return (
       <div className="App">
         <Header/>
@@ -54,14 +56,15 @@ class App extends Component {
                   () => this.props.currentUser ? (<Redirect to="/" />): (<SignInAndSignUp/>)
                   } 
                   />
+          <Route path="/checkout" component={Checkout}/>
         </Switch>
       </div>
     );
   }
 }
 
-const mapStateToProps = ({user}) => ({
-  currentUser: user.currentUser
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
 })
 
 const mapDispatchToProps = dispatch =>({
