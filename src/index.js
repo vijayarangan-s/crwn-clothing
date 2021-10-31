@@ -3,16 +3,18 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Route from './Route';
 import {BrowserRouter} from 'react-router-dom'
 import {Provider} from 'react-redux'
-import store from './redux/store';
-
+import { PersistGate } from 'redux-persist/integration/react';
+import obj from './redux/store';
+const {store, persistor} = obj
 
 ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
+      <PersistGate persistor={persistor}>
         <App/> 
+      </PersistGate>
     </BrowserRouter>
   </Provider>
   ,
