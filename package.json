@@ -26,7 +26,7 @@
   },
   "scripts": {
     "start": "node server.js",
-    "build": "cd client/ && yarn install && yarn build",
+    "build": "cd CRWN-CLOTHING/ && yarn install && yarn build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
