@@ -1,5 +1,6 @@
 import { createStore, applyMiddleware, compose } from 'redux'
 import logger  from 'redux-logger'
+import {persistStore} from 'redux-persist';
 import rootReducer from './root-reducer'
 const middleware = [logger];
 
@@ -16,5 +17,6 @@ const enhancer = composeEnhancers(
   // other store enhancers if any
 );
 const store = createStore(rootReducer,enhancer)
-
-export default store
+const persistor = persistStore(store)
+const obj ={store, persistor}
+export default obj
