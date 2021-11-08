@@ -27,6 +27,16 @@ class ShopPage extends Component {
     const { updateCollections } = this.props;
     const collectionRef = firestore.collection("collections");
 
+    // collectionRef.get().then(
+    //    (snapshot) => {
+    //     console.log ({snapshot})
+    //     const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
+    //     console.log({collectionsMap})
+    //     updateCollections(collectionsMap);
+    //     this.setState({ loading: false });
+    //   }
+    // );
+
     this.unSubscribeFromSnapshot = collectionRef.onSnapshot(
       async (snapshot) => {
         const collectionsMap = convertCollectionsSnapshotToMap(snapshot);
@@ -45,7 +55,7 @@ class ShopPage extends Component {
           exact
           path={`${match.path}`}
           render={(props) => (
-            <CollectionPageWithSpinner isLoading={loading} {...props} />
+            <CollectionsOverviewWitSpinner isLoading={loading} {...props} />
           )}
         />
         <Route

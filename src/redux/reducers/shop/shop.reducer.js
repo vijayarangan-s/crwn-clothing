@@ -9,6 +9,7 @@ export const shopReducer = (state = INITIAL_STATE, action) => {
 
     switch(action.type){
         case ShopActionType.UPDATE_COLLECTIONS:
+            console.log({payload:action.payload})
             return {
                 ...state,
                 collections: action.payload
