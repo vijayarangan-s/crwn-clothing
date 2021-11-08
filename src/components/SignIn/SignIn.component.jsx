@@ -22,7 +22,6 @@ class SignIn extends Component {
 
         try{
           const user = await auth.signInWithEmailAndPassword(email,password);
-          console.log({user})
           this.setState({email:'', password: ''})  
 
         } catch(err){
