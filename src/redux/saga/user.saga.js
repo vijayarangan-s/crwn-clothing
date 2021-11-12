@@ -6,16 +6,33 @@ import {
   googleProvider,
   createUserProfileDocument,
 } from "../../components/firebase/firebase.utils";
-import { googleSignInFailure, googleSignInSuccess } from "../actions/user/user.action";
+import { signInFailure, signInSuccess } from "../actions/user/user.action";
+
+export function* getSnapshotFromUserAuth(userAuth){
+  try{
+    const userRef = yield call(createUserProfileDocument, userAuth)
+    const userSnapshot = yield userRef.get()
+    yield put(signInSuccess({id: userSnapshot.id, ...userSnapshot.data()}))
+  } catch (error) {
+      yield put(signInFailure(error))
+  }
+}
 
 export function* signWithGoogle() {
   try {
     const {user} = yield auth.signInWithPopup(googleProvider);
-    const userRef = yield call(createUserProfileDocument, user)
-    const userSnapshot = yield userRef.get()
-    yield put(googleSignInSuccess({id: userSnapshot.id, ...userSnapshot.data()}))
+    yield getSnapshotFromUserAuth(user)
   } catch (error) {
-      yield put(googleSignInFailure(error))
+      yield put(signInFailure(error))
+  }
+}
+
+export function* signInWithEmail({payload:{email, password}}){
+  try{
+    const {user} =  yield auth.signInWithEmailAndPassword(email.email, email.password)
+    yield getSnapshotFromUserAuth(user)
+  }catch(err){
+    yield put(signInFailure(err))
   }
 }
 
@@ -23,6 +40,10 @@ export function* onGoogleSignInStart() {
     yield takeLatest(userActionType.GOOGLE_SIGN_IN_START, signWithGoogle)
 }
 
+export function* onEmailSignInStart() {
+  yield takeLatest(userActionType.EMAIL_SIGN_IN_START, signInWithEmail)
+}
+
 export function* userSaga(){
-    yield all([call(onGoogleSignInStart)])
+    yield all([call(onGoogleSignInStart), call(onEmailSignInStart)])
 }

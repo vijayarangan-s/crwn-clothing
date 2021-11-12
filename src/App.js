@@ -1,44 +1,20 @@
 import HomePage from "./components/Pages/HomePage/HomePage";
 import { Route, Switch, Redirect } from "react-router-dom";
 import ShopPage from "./components/Pages/Shop/Shop.component";
-import Header from "./components/Header/Header.component";
-import { SignInAndSignUp } from "./components/Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up.component";
-import {
-  auth,
-  createUserProfileDocument,
-} from "./components/firebase/firebase.utils";
 import { Component } from "react";
-
-import "./App.css";
 import { connect } from "react-redux";
-import { setCurrentUser } from "./redux/actions/user/user.action";
+import { SignInAndSignUp } from "./components/Pages/Sign-In-And-Sign-Up/Sign-In-And-Sign-Up.component";
 import { createStructuredSelector } from "reselect";
 import { selectCurrentUser } from "./utils/Selectors/user.selectors";
+
+import Header from "./components/Header/Header.component";
 import Checkout from "./components/Checkout/Checkout";
 
+import "./App.css";
 class App extends Component {
   unSubscribeFromAuth = null;
 
-  componentDidMount() {
-    const { setCurrentUser, collectionArray } = this.props;
-    // this.unSubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
-    //   if (userAuth) {
-    //     const userRef = await createUserProfileDocument(userAuth);
-
-    //     userRef.onSnapshot((snapshot) => {
-    //       setCurrentUser({
-    //         currentUser: {
-    //           id: snapshot.id,
-    //           ...snapshot.data(),
-
-    //         },
-    //       });
-    //     });
-    //   }
-
-    //   setCurrentUser(userAuth);
-    // });
-  }
+  componentDidMount() {}
 
   componentWillUnmount() {
     this.unSubscribeFromAuth();
@@ -69,8 +45,4 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser,
 });
 
-const mapDispatchToProps = (dispatch) => ({
-  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, null)(App);
