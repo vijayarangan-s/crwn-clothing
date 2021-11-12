@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux';
-import { googleSignInStart } from '../../redux/actions/user/user.action';
+import { emailSignInStart, googleSignInStart } from '../../redux/actions/user/user.action';
 import CustomButton from '../Custom-Button/Custom-Button.component';
-import { auth, signInWithGoogle } from '../firebase/firebase.utils';
 import FormInput from '../Form-Input/Form-Input.component';
 
 import './SignIn.styles.scss'
@@ -19,16 +18,9 @@ class SignIn extends Component {
 
     handleSubmit = async event => {
         event.preventDefault();
-
         const {email, password} = this.state
-
-        try{
-          const user = await auth.signInWithEmailAndPassword(email,password);
-          this.setState({email:'', password: ''})  
-
-        } catch(err){
-            console.log(err.message)
-        }
+        const {emailSignInStart} = this.props
+        emailSignInStart({email, password})
     }
 
     handleChange = e => {
@@ -44,7 +36,7 @@ class SignIn extends Component {
                 <h2>I already have account</h2>
                 <span>Sign In with your email and password</span>
 
-                <form onSubmit={this.handleSubmit}>
+                <form>
                      <FormInput 
                         name="email" t
                         ype="email" 
@@ -64,7 +56,9 @@ class SignIn extends Component {
                         required/>
                      <div className="buttons">
                         <CustomButton 
-                            type="submit"> 
+                            type="submit"
+                            onClick={this.handleSubmit}
+                            > 
                             Sign In
                         </CustomButton> 
 
@@ -83,7 +77,8 @@ class SignIn extends Component {
 }
 
 const mapDispatchToProps = dispatch => ({
-    googleSignInStart:() => dispatch(googleSignInStart())
+    googleSignInStart:() => dispatch(googleSignInStart()),
+    emailSignInStart: (email, password) => dispatch(emailSignInStart({email, password}))
 })
 
 export default connect(null, mapDispatchToProps)(SignIn)
